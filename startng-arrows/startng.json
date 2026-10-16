@@ -1,0 +1,8 @@
+{
+  "leaderboard": {
+    "stats": [
+      { "key": "level", "label": "Levels cleared", "order": "highest" },
+      { "key": "score", "label": "Score", "order": "highest" }
+    ]
+  }
+}
