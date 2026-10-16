@@ -311,10 +311,25 @@ function checkCleared() {
     game.salt = 0;
     game.playing = false;
     updateHud();
+    saveProgress();
     setTimeout(() => {
       buildBoard();
       game.playing = true;
     }, 1700);
+  }
+}
+
+// Save after every cleared level, so a run counts even if the player
+// closes the tab before running out of hearts. start.ng keeps each
+// player's best run, so saving often is safe.
+async function saveProgress() {
+  if (!who?.signedIn) {
+    if (game.level === 2) setTimeout(() => toast('Sign in with start.ng to save your score', 2400), 1900);
+    return;
+  }
+  const saved = await saveRun({ level: game.level - 1, score: game.score });
+  if (saved?.ok && saved.result.improved) {
+    setTimeout(() => toast(`Saved! You're #${saved.result.rank} on the leaderboard`, 2000), 1900);
   }
 }
 
